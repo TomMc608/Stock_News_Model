@@ -24,7 +24,7 @@ def find_links_in_section(url):
             print(link.get_attribute('href'))
 
         # Save all unique links to a text file
-        save_links_to_file(unique_links, 'cnn_links.txt')
+        save_links_to_file(unique_links, 'cnn_links_from_main_Index.txt')
 
     finally:
         # Close the webdriver
