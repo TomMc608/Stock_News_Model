@@ -68,6 +68,6 @@ def save_links_to_file(links, filename):
             file.write(link + '\n')
 
 if __name__ == "__main__":
-    input_file_path = "cnn_links_from_main_Index.txt"  # Change this to your input file path
+    input_file_path = "output_links_from_Main_Index.txt"  # Change this to your input file path
     output_file_name = "output_links.txt"  # Change this to your output file name
     scrape_links_from_urls(input_file_path, output_file_name)

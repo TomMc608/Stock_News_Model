@@ -14,15 +14,18 @@ def find_links_on_page(url, output_file_name):
         # Find all anchor links on the page
         links = find_links_recursive(driver)
 
-        # Remove duplicates from the list of links
-        unique_links = list(set(links))
+        # Filter links to keep only those containing the word "article"
+        filtered_links = [link for link in links if 'article' in link.lower()]
 
-        print("Total unique links found:", len(unique_links))
-        for link in unique_links:
+        print("Total unique links found:", len(filtered_links))
+        for link in filtered_links:
             print(link)
 
-        # Save all unique links to a text file
-        save_links_to_file(unique_links, output_file_name)
+        # Save filtered links to a text file
+        save_links_to_file(filtered_links, output_file_name)
+
+    except WebDriverException as e:
+        print("WebDriverException occurred:", e)
 
     finally:
         # Close the webdriver
