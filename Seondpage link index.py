@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import WebDriverException
 
 def scrape_links_from_urls(input_file_path, output_file_name):
     # Initialize Chrome webdriver
@@ -16,14 +17,22 @@ def scrape_links_from_urls(input_file_path, output_file_name):
 
         # Iterate through each URL
         for url in urls:
-            # Open the URL
-            driver.get(url.strip())  # Strip to remove leading/trailing whitespaces
+            # Strip to remove leading/trailing whitespaces
+            url = url.strip()
+            if not url.startswith("http"):
+                print(f"Skipping invalid URL: {url}")
+                continue
 
-            # Find the specified section containing links
-            section = driver.find_element(By.CSS_SELECTOR, 'body > div.pg-no-rail.pg-wrapper.pg.t-light > div > div:nth-child(2)')
+            try:
+                # Open the URL
+                driver.get(url)
+            except WebDriverException as e:
+                print(f"Error accessing URL: {url}")
+                print(e)
+                continue
 
-            # Find all anchor links within the section and its descendants
-            links = find_links_recursive(section)
+            # Find all anchor links on the page
+            links = find_links_recursive(driver)
 
             # Add the links to the list of all links
             all_links.extend(links)
@@ -33,7 +42,7 @@ def scrape_links_from_urls(input_file_path, output_file_name):
 
         print("Total unique links found:", len(unique_links))
         for link in unique_links:
-            print(link.get_attribute('href'))
+            print(link)
 
         # Save all unique links to a text file
         save_links_to_file(unique_links, output_file_name)
@@ -42,24 +51,23 @@ def scrape_links_from_urls(input_file_path, output_file_name):
         # Close the webdriver
         driver.quit()
 
-# Recursively find all anchor links within an element
-def find_links_recursive(element):
+# Recursively find all anchor links within the page using XPath
+def find_links_recursive(driver):
     links = []
-    anchor_links = element.find_elements(By.TAG_NAME, 'a')
+    anchor_links = driver.find_elements(By.XPATH, '//a')
     for anchor_link in anchor_links:
-        links.append(anchor_link)
-    child_elements = element.find_elements(By.XPATH, './/*')
-    for child_element in child_elements:
-        links.extend(find_links_recursive(child_element))
+        href = anchor_link.get_attribute('href')
+        if href:
+            links.append(href)
     return links
 
 # Save all links to a file
 def save_links_to_file(links, filename):
     with open(filename, 'w', encoding='utf-8') as file:
         for link in links:
-            file.write(link.get_attribute('href') + '\n')
+            file.write(link + '\n')
 
 if __name__ == "__main__":
-    input_file_path = "cnn_links_from_main_Index.txt"
-    output_file_name = "links_from_Index_page.txt"
+    input_file_path = "cnn_links_from_main_Index.txt"  # Change this to your input file path
+    output_file_name = "output_links.txt"  # Change this to your output file name
     scrape_links_from_urls(input_file_path, output_file_name)
