@@ -40,12 +40,15 @@ def scrape_links_from_urls(input_file_path, output_file_name):
         # Remove duplicates from the list of links
         unique_links = list(set(all_links))
 
-        print("Total unique links found:", len(unique_links))
-        for link in unique_links:
+        # Filter out links containing the word "article"
+        article_links = [link for link in unique_links if 'article' in link.lower()]
+
+        print("Total unique links found:", len(article_links))
+        for link in article_links:
             print(link)
 
-        # Save all unique links to a text file
-        save_links_to_file(unique_links, output_file_name)
+        # Save article links to a text file
+        save_links_to_file(article_links, output_file_name)
 
     finally:
         # Close the webdriver
@@ -68,6 +71,6 @@ def save_links_to_file(links, filename):
             file.write(link + '\n')
 
 if __name__ == "__main__":
-    input_file_path = "output_links_from_Main_Index.txt"  # Change this to your input file path
-    output_file_name = "output_links.txt"  # Change this to your output file name
+    input_file_path = "output_article_links.txt"  # Change this to your input file path
+    output_file_name = "output_article_links_done.txt"  # Change this to your output file name
     scrape_links_from_urls(input_file_path, output_file_name)
