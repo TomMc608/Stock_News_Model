@@ -1,4 +1,8 @@
-def check_duplicates(links):
+def check_duplicates(file_path):
+    # Read the file and extract the links
+    with open(file_path, 'r', encoding='utf-8') as file:
+        links = file.readlines()
+    
     # Convert the list to a set to remove duplicates
     unique_links = set(links)
     
@@ -6,53 +10,10 @@ def check_duplicates(links):
     if len(links) == len(unique_links):
         print("No duplicate links found.")
     else:
-        print("Duplicate links found.")
+        num_duplicates = len(links) - len(unique_links)
+        print(f"Found {num_duplicates} duplicate links.")
 
-# List of links
-links = [
-            "https://edition.cnn.com/article/sitemap-2021.html",
-            "https://edition.cnn.com/article/sitemap-2018.html",
-            "https://edition.cnn.com/gallery/sitemap-2015.html",
-            "https://edition.cnn.com/gallery/sitemap-2013.html",
-            "https://edition.cnn.com/gallery/sitemap-2024.html",
-            "https://edition.cnn.com/gallery/sitemap-2014.html",
-            "https://edition.cnn.com/gallery/sitemap-2023.html",
-            "https://edition.cnn.com/article/sitemap-2012.html",
-            "https://edition.cnn.com/article/sitemap-2019.html",
-            "https://edition.cnn.com/video/sitemap-2019.html",
-            "https://edition.cnn.com/article/sitemap-2011.html",
-            "https://edition.cnn.com/article/sitemap-2014.html",
-            "https://edition.cnn.com/article/sitemap-2023.html",
-            "https://edition.cnn.com/article/sitemap-2020.html",
-            "https://edition.cnn.com/article/sitemap-2013.html",
-            "https://edition.cnn.com/gallery/sitemap-2017.html",
-            "https://edition.cnn.com/gallery/sitemap-2018.html",
-            "https://edition.cnn.com/special/sitemap-2014.html",
-            "https://edition.cnn.com/gallery/sitemap-2019.html",
-            "https://edition.cnn.com/gallery/sitemap-2011.html",
-            "https://edition.cnn.com/gallery/sitemap-2021.html",
-            "https://edition.cnn.com/special/sitemap-2015.html",
-            "https://edition.cnn.com/special/sitemap-2023.html",
-            "https://edition.cnn.com/article/sitemap-2024.html",
-            "https://edition.cnn.com/special/sitemap-2016.html",
-            "https://edition.cnn.com/special/sitemap-2021.html",
-            "https://edition.cnn.com/gallery/sitemap-2016.html",
-            "https://edition.cnn.com/special/sitemap-2019.html",
-            "https://edition.cnn.com/special/sitemap-2017.html",
-            "https://edition.cnn.com/video/sitemap-2021.html",
-            "https://edition.cnn.com/gallery/sitemap-2022.html",
-            "https://edition.cnn.com/gallery/sitemap-2020.html",
-            "https://edition.cnn.com/video/sitemap-2020.html",
-            "https://edition.cnn.com/article/sitemap-2016.html",
-            "https://edition.cnn.com/article/sitemap-2017.html",
-            "https://edition.cnn.com/special/sitemap-2018.html",
-            "https://edition.cnn.com/special/sitemap-2022.html",
-            "https://edition.cnn.com/video/sitemap-2022.html",
-            "https://edition.cnn.com/special/sitemap-2020.html",
-            "https://edition.cnn.com/gallery/sitemap-2012.html",
-            "https://edition.cnn.com/article/sitemap-2022.html",
-            "https://edition.cnn.com/article/sitemap-2015.html",
-]
 
+file_path = "all_links.txt"
 # Call the function to check for duplicates
-check_duplicates(links)
+check_duplicates(file_path)
