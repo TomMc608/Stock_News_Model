@@ -58,7 +58,9 @@ def scrape_article_with_retry(url, max_retries=1):
         except requests.HTTPError as e:
             print(f"HTTP error occurred: {e}")
             retries += 1
-    print(f"Failed to scrape URL: {url}")
+            if retries > max_retries:
+                break
+    print(f"Failed to scrape URL: {url} after {max_retries} retries.")
     return None
 
 def scrape_article(url):
