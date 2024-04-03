@@ -11,4 +11,4 @@ def cleanup_links(file_path):
         file.writelines(modified_lines)
 
 
-cleanup_links('all_links.txt')
+cleanup_links('all_links_test.txt')
