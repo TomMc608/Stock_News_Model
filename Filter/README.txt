@@ -1,0 +1,1 @@
+Filter.py was a diffrent approch at filtering but was taking to long to filter. there are som ajustments that are needed. 
